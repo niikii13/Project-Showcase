@@ -41,5 +41,5 @@
 
 ---
 ## 📬 Контакты
-* **Telegram:** [@ваш_юзернейм](https://t.me/+79997309703)
-* **Email:** n11ki13@yandex.ru
+* **Telegram:** [Ilya Nikishin](https://t.me/+79997309703)
+* **Email:** nikishinoficial@ya.ru
