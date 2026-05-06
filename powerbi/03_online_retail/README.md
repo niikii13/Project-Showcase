@@ -42,9 +42,13 @@
 Модель состоит из трёх объектов:
 
 | **Таблица** | **Назначение** |
+| --- | --- |
 | Total_table | Факт-таблица: все транзакции с полями Invoice, Date, CustomerID, Country, Description, Price, Quantity |
+| --- | --- |
 | rfm_segmented_data | Справочник клиентов: R/F/M-скоры, итоговый RFM_Score и присвоенный сегмент |
+| --- | --- |
 | Меры | Изолированная таблица с DAX-мерами |
+| --- | --- |
 
 Связь: rfm_segmented_data\[Customer ID\] → Total_table\[Customer ID\] (один ко многим).
 
