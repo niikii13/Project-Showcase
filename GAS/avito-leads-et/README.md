@@ -54,4 +54,4 @@
 **Интерактивная демо-версия**
 
 Вы можете посмотреть структуру таблиц и интерфейс кастомного меню вживую по ссылке ниже:
-**[Google Sheets: Инструменты автоматизации](https://docs.google.com/spreadsheets/d/1zkkk0HpgRljg2Etn_AttoYTAEZveVknjUvDQL0RMWYo/edit?usp=sharing)** *(доступно в режиме чтения)*
+**[Google Sheets: Инструменты автоматизации](https://docs.google.com/spreadsheets/d/1ePNwFwv-bgUrB9S4YFWAIWjWPw0fWrQXs-WRLzjOb40/edit?usp=sharing)** *(доступно в режиме чтения)*
