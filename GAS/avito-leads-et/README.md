@@ -1,4 +1,4 @@
-***Автоматизация ETL-процессов и создания CRM-инструмента в Google Sheets***
+## Автоматизация ETL-процессов и создания CRM-инструмента в Google Sheets
 
 Стек технологий: Google Apps Script (JavaScript), Google Sheets, AI (Prompt Engineering).
 
@@ -51,6 +51,6 @@
 
 ---
 
-## 📊 Интерактивная демо-версия
+Интерактивная демо-версия
 Вы можете посмотреть структуру таблиц и интерфейс кастомного меню вживую по ссылке ниже:
-👉 **[Google Sheets: Инструменты автоматизации](https://docs.google.com/spreadsheets/d/1zkkk0HpgRljg2Etn_AttoYTAEZveVknjUvDQL0RMWYo/edit?usp=sharing)** *(доступно в режиме чтения)*
+**[Google Sheets: Инструменты автоматизации](https://docs.google.com/spreadsheets/d/1zkkk0HpgRljg2Etn_AttoYTAEZveVknjUvDQL0RMWYo/edit?usp=sharing)** *(доступно в режиме чтения)*
