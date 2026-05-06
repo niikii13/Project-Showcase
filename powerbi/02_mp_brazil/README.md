@@ -230,3 +230,6 @@ olist_sellers → bridge_Geo (seller_geo) → olist_geolocation
 - Написание **динамического ABC-анализа на DAX** с использованием VAR, SUMX, FILTER и ALL
 - Функции **Time Intelligence** (YoY, MoM) через кастомный календарь
 - Применение принципа **Pixel Perfect** через интеграцию Figma → Power BI Background
+
+- ### 📂 Материалы проекта
+* [Скачать файл отчёта (.pbix)](https://github.com/niikii13/Project-Showcase/raw/main/powerbi/02_mp_brazil/mp_brazil.pbix) — исходный файл Power BI с моделью данных Olist, настроенными связями и мерами DAX (размер: 59.1 МБ).
