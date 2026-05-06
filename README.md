@@ -41,6 +41,5 @@
 
 ---
 ## 📬 Контакты
-* **LinkedIn:** [Ваш профиль](https://linkedin.com/in/...)
-* **Telegram:** [@ваш_юзернейм](https://t.me/...)
-* **Email:** your.email@example.com
+* **Telegram:** [@ваш_юзернейм](https://t.me/@l0dblr)
+* **Email:** n11ki13@yandex.ru
