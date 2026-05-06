@@ -215,4 +215,4 @@ Wildberries — крупнейший маркетплейс России, и у 
 - Понимание бизнес-логики маркетплейсов: выкупаемость, логистические издержки, механика рекламных аукционов WB
 
 ### 📂 Материалы проекта
-* [Скачать файл отчёта (.pbix)](Marketplace_Stats.pbix?raw=true) — исходный файл Power BI со всеми мерами DAX и моделью данных.
+* [Скачать файл отчёта (.pbix)](https://github.com/niikii13/Project-Showcase/raw/main/powerbi/01_wildberries_analytics/Marketplace_Stats.pbix) — исходный файл Power BI со всеми мерами DAX и моделью данных.
