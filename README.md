@@ -41,5 +41,5 @@
 
 ---
 ## 📬 Контакты
-* **Telegram:** [@ваш_юзернейм](https://t.me/@l0dblr)
+* **Telegram:** [@ваш_юзернейм](https://t.me/+79997309703)
 * **Email:** n11ki13@yandex.ru
