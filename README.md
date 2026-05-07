@@ -7,7 +7,7 @@
 ## 📍 Навигация по проектам
 * [🛠 Стек технологий](#-стек-технологий)
 * [📦 Аналитика маркетплейсов (Wildberries)](#-аналитика-маркетплейсов-wildberries)
-* [🇧🇷 E-commerce анализ (Olist Brazil)](#-e-commerce-анализ-olist-brazil)
+* [Brazil E-commerce анализ (Olist Brazil)](#-e-commerce-анализ-olist-brazil)
 * [⚙️ Автоматизация и Google Apps Script](#-автоматизация-и-google-apps-script)
 * [🗄 SQL Практика](#-sql-практика)
 * [📫 Контакты](#-контакты)
@@ -16,7 +16,7 @@
 
 ## 🛠 Стек технологий
 * **BI инструменты:** Power BI (DAX, Power Query), проектирование UI/UX в Figma.
-* **Базы данных:** SQL (PostgreSQL, ClickHouse), работа с Stepik.
+* **Базы данных:** SQL (PostgreSQL, ClickHouse) Наличие сертификата о прохождении курса
 * **Программирование:** JavaScript (Google Apps Script) для ETL-процессов.
 * **Методология:** ABC/XYZ-анализ, расчет маржинальности, работа с API.
 
@@ -74,8 +74,5 @@
 Если у вас есть вопросы по моим проектам или предложения о сотрудничестве, буду рад пообщаться!
 
 * **GitHub:** [niikii13](https://github.com/niikii13)
-* **LinkedIn:** [Ваша ссылка]
-* **Telegram:** [@Ваш_Ник]
-
----
-*Последнее обновление: Май 2026*
+* **Telegram:** [Переход в профиль](https://t.me/+79997309703)
+* **email:** nikishinoficial@yandex.ru
