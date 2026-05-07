@@ -74,5 +74,5 @@
 Если у вас есть вопросы по моим проектам или предложения о сотрудничестве, буду рад пообщаться!
 
 * **GitHub:** [niikii13](https://github.com/niikii13)
-* **Telegram:** [Переход в профиль](https://t.me/+79997309703)
+* **Telegram:** [@nikil13](https://t.me/nikil13)
 * **email:** nikishinoficial@yandex.ru
