@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Italy — Операционный Отчёт · Февраль 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f3ef;
+    --red: #c8102e;
+    --red-dark: #8b0c1f;
+    --red-muted: rgba(200,16,46,0.12);
+    --gray: #1c1c1c;
+    --gray-mid: #2e2e2e;
+    --gray-light: #888;
+    --border: rgba(255,255,255,0.07);
+    --glass-bg: rgba(10,10,10,0.55);
+    --glass-border: rgba(255,255,255,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─────────────────────── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── LIQUID GLASS HEADER ───────────────────────── */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 0 48px;
+    height: 68px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--glass-bg);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: 0 1px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+
+  .header-logo {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.6rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--white);
+  }
+  .header-logo span { color: var(--red); }
+
+  nav { display: flex; gap: 32px; align-items: center; }
+  nav a {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--white); }
+
+  .header-badge {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  .header-right {
+    display: flex; align-items: center; gap: 16px;
+  }
+
+  .header-download {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--red);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+  .header-download:hover {
+    background: var(--red-dark);
+    transform: translateY(-1px);
+  }
+  .header-download svg { flex-shrink: 0; transition: transform 0.2s; }
+  .header-download:hover svg { transform: translateY(2px); }
+
+  /* ─── HERO ──────────────────────────────────────── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: flex-end;
+    padding: 0 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 80% 40%, rgba(200,16,46,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 10% 80%, rgba(200,16,46,0.08) 0%, transparent 50%),
+      linear-gradient(160deg, #0a0a0a 0%, #111 60%, #0d0d0d 100%);
+  }
+
+  .hero-line {
+    position: absolute; top: 0; bottom: 0;
+    left: 58%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(200,16,46,0.3) 30%, rgba(200,16,46,0.3) 70%, transparent);
+    animation: lineFade 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes lineFade { from { opacity: 0.3; } to { opacity: 0.8; } }
+
+  .hero-content { position: relative; z-index: 1; max-width: 780px; }
+
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s ease forwards;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.2rem, 7vw, 6.5rem);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.4s ease forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--red);
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(245,243,239,0.55);
+    max-width: 520px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.6s ease forwards;
+  }
+
+  .hero-stats {
+    display: flex; gap: 48px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.8s ease forwards;
+  }
+
+  .hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .hero-stat-num.red { color: var(--red); }
+
+  .hero-stat-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    margin-top: 4px;
+  }
+
+  .scroll-hint {
+    position: absolute; bottom: 32px; right: 48px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gray-light);
+    animation: float 2.5s ease-in-out infinite;
+  }
+
+  .scroll-hint::before {
+    content: '';
+    width: 30px; height: 1px;
+    background: var(--gray-light);
+  }
+
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+  /* ─── SECTIONS SHARED ───────────────────────────── */
+  section { position: relative; padding: 120px 48px; }
+  section:nth-child(even) { background: rgba(255,255,255,0.018); }
+
+  .section-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-tag::after { content: ''; flex: 0 0 40px; height: 1px; background: var(--red); }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 64px;
+  }
+
+  /* ─── KPI CARDS ─────────────────────────────────── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-bottom: 80px;
+  }
+
+  .kpi-card {
+    background: var(--gray);
+    padding: 36px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, background 0.3s;
+    cursor: default;
+  }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .kpi-card:hover { background: #222; transform: translateY(-4px); }
+  .kpi-card:hover::before { transform: scaleX(1); }
+
+  .kpi-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    margin-bottom: 16px;
+  }
+
+  .kpi-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+
+  .kpi-trend {
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .kpi-trend.down { color: var(--red); }
+  .kpi-trend.up { color: #5db88a; }
+  .kpi-trend.warn { color: #e8a04a; }
+
+  .kpi-sub {
+    font-size: 0.72rem;
+    color: var(--gray-light);
+    margin-top: 8px;
+  }
+
+  /* ─── CHANNELS ──────────────────────────────────── */
+  .channels-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .channel-list { display: flex; flex-direction: column; gap: 4px; }
+
+  .channel-item {
+    padding: 20px 24px;
+    background: var(--gray);
+    display: flex; align-items: center; gap: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s;
+  }
+  .channel-item:hover { background: #222; }
+
+  .channel-name {
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+    min-width: 120px;
+  }
+
+  .channel-bar-wrap {
+    flex: 1;
+    height: 3px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+  .channel-bar {
+    height: 100%;
+    background: var(--red);
+    border-radius: 1px;
+    transform-origin: left;
+    animation: barGrow 1s ease forwards;
+    transform: scaleX(0);
+  }
+  @keyframes barGrow { to { transform: scaleX(1); } }
+
+  .channel-pct {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    min-width: 52px;
+    text-align: right;
+  }
+
+  .channel-badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+  .badge-over { background: rgba(93,184,138,0.15); color: #5db88a; }
+  .badge-under { background: var(--red-muted); color: var(--red); }
+  .badge-critical { background: rgba(200,16,46,0.25); color: var(--red); }
+
+  .insight-box {
+    background: var(--gray);
+    padding: 40px;
+    border-left: 2px solid var(--red);
+    position: relative;
+  }
+
+  .insight-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .insight-box p {
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: rgba(245,243,239,0.7);
+    margin-bottom: 16px;
+  }
+
+  .insight-box p:last-child { margin-bottom: 0; }
+
+  .highlight-num {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--red);
+  }
+
+  /* ─── HEAT MAP ──────────────────────────────────── */
+  .heatmap-wrapper {
+    overflow-x: auto;
+    margin-top: 8px;
+  }
+
+  .heatmap-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 640px;
+  }
+
+  .heatmap-table th {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    padding: 10px 8px;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  .heatmap-table td {
+    width: 52px;
+    height: 44px;
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.04);
+    transition: transform 0.15s;
+    cursor: default;
+    position: relative;
+  }
+
+  .heatmap-table td:hover { transform: scale(1.15); z-index: 2; }
+
+  .heatmap-table .row-label {
+    text-align: left;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    padding: 8px 16px 8px 0;
+    white-space: nowrap;
+    cursor: default;
+  }
+
+  .intensity-0 { background: rgba(28,28,28,0.8); color: rgba(255,255,255,0.2); }
+  .intensity-1 { background: rgba(200,16,46,0.1); color: rgba(255,255,255,0.5); }
+  .intensity-2 { background: rgba(200,16,46,0.22); color: rgba(255,255,255,0.65); }
+  .intensity-3 { background: rgba(200,16,46,0.38); color: rgba(255,255,255,0.8); }
+  .intensity-4 { background: rgba(200,16,46,0.58); color: rgba(255,255,255,0.95); }
+  .intensity-5 { background: rgba(200,16,46,0.80); color: #fff; font-weight: 700; }
+
+  /* ─── RECOMMENDATIONS ───────────────────────────── */
+  .rec-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .rec-card {
+    background: var(--gray);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.25s;
+  }
+  .rec-card:hover { background: #222; }
+
+  .rec-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--red-muted);
+    line-height: 1;
+    margin-bottom: 24px;
+    transition: color 0.25s;
+  }
+  .rec-card:hover .rec-num { color: rgba(200,16,46,0.3); }
+
+  .rec-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+
+  .rec-text {
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: rgba(245,243,239,0.6);
+  }
+
+  /* ─── ETL SECTION ───────────────────────────────── */
+  .etl-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-bottom: 48px;
+  }
+
+  .etl-step {
+    background: var(--gray);
+    padding: 32px 28px;
+    position: relative;
+  }
+
+  .etl-step::after {
+    content: attr(data-step);
+    position: absolute; top: 20px; right: 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: rgba(200,16,46,0.08);
+    line-height: 1;
+  }
+
+  .etl-icon {
+    width: 36px; height: 36px;
+    border: 1px solid var(--red);
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    font-size: 1rem;
+  }
+
+  .etl-title {
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .etl-text {
+    font-size: 0.78rem;
+    line-height: 1.7;
+    color: rgba(245,243,239,0.55);
+  }
+
+  /* ─── MENU CATEGORIES ───────────────────────────── */
+  .menu-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 680px;
+  }
+
+  .menu-bar-item {
+    display: flex; align-items: center; gap: 20px;
+  }
+
+  .menu-bar-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    width: 160px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .menu-bar-track {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .menu-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--red-dark), var(--red));
+    border-radius: 1px;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .menu-bar-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    min-width: 40px;
+  }
+
+  /* ─── CHART (SIMPLE SVG LINE) ───────────────────── */
+  .chart-area {
+    background: var(--gray);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .chart-legend {
+    display: flex; gap: 28px; margin-bottom: 28px;
+  }
+
+  .legend-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  .legend-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ─── FOOTER ────────────────────────────────────── */
+  footer {
+    padding: 48px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    letter-spacing: -0.02em;
+  }
+  .footer-brand span { color: var(--red); }
+
+  .footer-meta {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--gray-light);
+    text-transform: uppercase;
+    text-align: right;
+  }
+
+  /* ─── SCROLL ANIMATIONS ─────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ─── DIVIDER LINE ──────────────────────────────── */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border) 30%, var(--border) 70%, transparent);
+  }
+
+  /* ─── RESPONSIVE ────────────────────────────────── */
+  @media (max-width: 900px) {
+    header { padding: 0 24px; }
+    nav { display: none; }
+    section { padding: 80px 24px; }
+    #hero { padding: 0 24px 64px; }
+    .kpi-grid { grid-template-columns: repeat(2,1fr); }
+    .channels-grid { grid-template-columns: 1fr; }
+    .rec-grid { grid-template-columns: 1fr; }
+    .etl-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── HEADER ─────────────────────────────────────────── -->
+<header>
+  <div class="header-logo">italy<span>.</span></div>
+  <nav>
+    <a href="#kpi">KPI</a>
+    <a href="#channels">Каналы</a>
+    <a href="#load">Нагрузка</a>
+    <a href="#recs">Рекомендации</a>
+  </nav>
+  <div class="header-right">
+    <div class="header-badge">Фев 2026</div>
+    <a class="header-download" href="https://drive.google.com/uc?export=download&id=1hu29Wj_oyY18HYICYEUWTdsy8RUzev_4" target="_blank" rel="noopener">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6.5 1v7.5M6.5 8.5L4 6M6.5 8.5L9 6M1.5 10.5h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Скачать отчёт
+    </a>
+  </div>
+</header>
+
+<!-- ─── HERO ───────────────────────────────────────────── -->
+<section id="hero" style="padding-top:0">
+  <div class="hero-bg"></div>
+  <div class="hero-line"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Аналитический отчёт · Февраль 2026</div>
+    <h1 class="hero-title">
+      Операционные<br>показатели<br><em>ресторанной сети</em>
+    </h1>
+    <p class="hero-desc">
+      Интерактивный анализ KPI за февраль 2026 года — выручка, трафик, средний чек, структура каналов продаж и рекомендации для роста.
+    </p>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num red">22.42 млн</div>
+        <div class="hero-stat-label">Выручка</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">6 375</div>
+        <div class="hero-stat-label">Чеков за месяц</div>
+      </div>
+      <div>
+        <div class="hero-stat-num red">86.18%</div>
+        <div class="hero-stat-label">Выполнение плана</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">Листай вниз</div>
+</section>
+
+<!-- ─── KPI ────────────────────────────────────────────── -->
+<section id="kpi">
+  <div class="section-tag">Ключевые показатели</div>
+  <h2 class="section-title reveal">KPI · Февраль 2026</h2>
+
+  <div class="kpi-grid">
+    <div class="kpi-card reveal reveal-delay-1">
+      <div class="kpi-label">Общая выручка</div>
+      <div class="kpi-value">22.42<small style="font-size:1.1rem;font-weight:400"> млн</small></div>
+      <div class="kpi-trend down">▼ &minus;2.83% LFL</div>
+      <div class="kpi-sub">План: 26.01 млн — недосдача ≈ 3.6 млн руб.</div>
+    </div>
+    <div class="kpi-card reveal reveal-delay-2">
+      <div class="kpi-label">Средний чек</div>
+      <div class="kpi-value">3 517<small style="font-size:1rem;font-weight:400"> ₽</small></div>
+      <div class="kpi-trend down">▼ было 3 705 ₽ (2025)</div>
+      <div class="kpi-sub">Снижение на &#8722;187 ₽ к прошлому году</div>
+    </div>
+    <div class="kpi-card reveal reveal-delay-3">
+      <div class="kpi-label">Количество чеков</div>
+      <div class="kpi-value">6 375</div>
+      <div class="kpi-trend up">▲ +2.3% LFL</div>
+      <div class="kpi-sub">2025 год: 6 229 чеков</div>
+    </div>
+    <div class="kpi-card reveal reveal-delay-4">
+      <div class="kpi-label">Выполнение плана</div>
+      <div class="kpi-value">86.18<small style="font-size:1.2rem;font-weight:400">%</small></div>
+      <div class="kpi-trend warn">⚠ Недовыполнение</div>
+      <div class="kpi-sub">Отставание от плановых показателей</div>
+    </div>
+  </div>
+
+  <!-- Simple SVG revenue chart -->
+  <div class="chart-area reveal">
+    <div class="chart-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#c8102e"></div>Факт 2026</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#5db88a"></div>Факт 2025</div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(245,243,239,0.3)"></div>План 2026</div>
+    </div>
+    <svg viewBox="0 0 900 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#c8102e" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#c8102e" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <!-- Grid lines -->
+      <line x1="0" y1="50" x2="900" y2="50" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+      <line x1="0" y1="100" x2="900" y2="100" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+      <line x1="0" y1="150" x2="900" y2="150" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+      <!-- Plan line -->
+      <line x1="0" y1="70" x2="900" y2="70" stroke="rgba(245,243,239,0.2)" stroke-width="1.5" stroke-dasharray="6,4"/>
+      <!-- 2025 line -->
+      <polyline points="0,80 60,72 120,78 180,65 240,75 300,68 360,82 420,60 480,72 540,70 600,78 660,65 720,72 780,68 840,75 900,70"
+        fill="none" stroke="#5db88a" stroke-width="1.5" stroke-linejoin="round" opacity="0.6"/>
+      <!-- 2026 area -->
+      <polygon points="0,95 60,88 120,100 180,82 240,92 300,85 360,105 420,78 480,88 540,95 600,102 660,85 720,92 780,88 840,95 900,90 900,200 0,200"
+        fill="url(#g1)"/>
+      <!-- 2026 line -->
+      <polyline points="0,95 60,88 120,100 180,82 240,92 300,85 360,105 420,78 480,88 540,95 600,102 660,85 720,92 780,88 840,95 900,90"
+        fill="none" stroke="#c8102e" stroke-width="2.5" stroke-linejoin="round"/>
+      <!-- X axis labels -->
+      <text x="0" y="195" fill="rgba(245,243,239,0.3)" font-size="10" font-family="DM Sans">1</text>
+      <text x="90" y="195" fill="rgba(245,243,239,0.3)" font-size="10" font-family="DM Sans">5</text>
+      <text x="210" y="195" fill="rgba(245,243,239,0.3)" font-size="10" font-family="DM Sans">10</text>
+      <text x="360" y="195" fill="rgba(245,243,239,0.3)" font-size="10" font-family="DM Sans">15</text>
+      <text x="480" y="195" fill="rgba(245,243,239,0.3)" font-size="10" font-family="DM Sans">20</text>
+      <text x="630" y="195" fill="rgba(245,243,239,0.3)" font-size="10" font-family="DM Sans">25</text>
+      <text x="840" y="195" fill="rgba(245,243,239,0.3)" font-size="10" font-family="DM Sans">28</text>
+      <!-- Y axis label -->
+      <text x="2" y="44" fill="rgba(245,243,239,0.3)" font-size="9" font-family="DM Sans">Выручка</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ─── CHANNELS ───────────────────────────────────────── -->
+<section id="channels">
+  <div class="section-tag">Каналы продаж</div>
+  <h2 class="section-title reveal">Структура каналов<br>дистрибуции</h2>
+
+  <div class="channels-grid">
+    <div class="channel-list reveal">
+      <div class="channel-item">
+        <div class="channel-name">Ресторан</div>
+        <div class="channel-bar-wrap">
+          <div class="channel-bar" style="width:73.01%; animation-delay:0.2s"></div>
+        </div>
+        <div class="channel-pct">73.01%</div>
+        <div class="channel-badge badge-under">−6.58% от плана</div>
+      </div>
+      <div class="channel-item">
+        <div class="channel-name">Доставка</div>
+        <div class="channel-bar-wrap">
+          <div class="channel-bar" style="width:100%; animation-delay:0.35s; background: #5db88a"></div>
+        </div>
+        <div class="channel-pct" style="color:#5db88a">+125%</div>
+        <div class="channel-badge badge-over">+125.66% от плана</div>
+      </div>
+      <div class="channel-item">
+        <div class="channel-name">Агрегатор</div>
+        <div class="channel-bar-wrap">
+          <div class="channel-bar" style="width:55%; animation-delay:0.5s"></div>
+        </div>
+        <div class="channel-pct">≈55%</div>
+        <div class="channel-badge badge-under">Отстаёт от плана</div>
+      </div>
+      <div class="channel-item">
+        <div class="channel-name">Самовывоз</div>
+        <div class="channel-bar-wrap">
+          <div class="channel-bar" style="width:41.07%; animation-delay:0.65s; background:#c8102e"></div>
+        </div>
+        <div class="channel-pct" style="color:#c8102e">41%</div>
+        <div class="channel-badge badge-critical">Критично — 41% плана</div>
+      </div>
+    </div>
+
+    <div class="insight-box reveal">
+      <h3>Ключевой инсайт:<br>Дисбаланс каналов</h3>
+      <p>
+        Канал «Ресторан» формирует <span class="highlight-num">15.95 млн руб.</span> (73% выручки), но отстаёт от плана на 6.58%. Основная аудитория смещается в сторону домашнего потребления.
+      </p>
+      <p>
+        Настоящим драйвером роста стала <span class="highlight-num">Доставка</span> — перевыполнение плана на <span class="highlight-num">+125.66%</span> при положительной LFL-динамике. Это структурный сдвиг в поведении потребителей.
+      </p>
+      <p>
+        Самовывоз — критическая точка с выполнением всего <span class="highlight-num">41.07% плана</span>. Требует пересмотра стратегии: либо перераспределение бюджета, либо устранение операционных барьеров.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── LOAD / HEAT MAP ────────────────────────────────── -->
+<section id="load">
+  <div class="section-tag">Операционная нагрузка</div>
+  <h2 class="section-title reveal">Тепловая карта<br>спроса по дням и часам</h2>
+
+  <div class="heatmap-wrapper reveal">
+    <table class="heatmap-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>8:00</th><th>9:00</th><th>10:00</th><th>11:00</th><th>12:00</th>
+          <th>13:00</th><th>14:00</th><th>15:00</th><th>16:00</th><th>17:00</th>
+          <th>18:00</th><th>19:00</th><th>20:00</th><th>21:00</th><th>22:00</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-label">Пн</td>
+          <td class="intensity-1">низк</td><td class="intensity-1">низк</td><td class="intensity-2">↑</td>
+          <td class="intensity-2">↑</td><td class="intensity-3">ср</td><td class="intensity-5">пик</td>
+          <td class="intensity-4">выс</td><td class="intensity-1">низк</td><td class="intensity-1">низк</td>
+          <td class="intensity-2">↑</td><td class="intensity-3">ср</td><td class="intensity-4">выс</td>
+          <td class="intensity-4">выс</td><td class="intensity-2">↑</td><td class="intensity-1">низк</td>
+        </tr>
+        <tr>
+          <td class="row-label">Вт</td>
+          <td class="intensity-1">низк</td><td class="intensity-1">низк</td><td class="intensity-2">↑</td>
+          <td class="intensity-2">↑</td><td class="intensity-3">ср</td><td class="intensity-5">пик</td>
+          <td class="intensity-4">выс</td><td class="intensity-1">низк</td><td class="intensity-1">низк</td>
+          <td class="intensity-1">низк</td><td class="intensity-3">ср</td><td class="intensity-4">выс</td>
+          <td class="intensity-3">ср</td><td class="intensity-2">↑</td><td class="intensity-1">низк</td>
+        </tr>
+        <tr>
+          <td class="row-label">Ср</td>
+          <td class="intensity-0">—</td><td class="intensity-1">низк</td><td class="intensity-2">↑</td>
+          <td class="intensity-2">↑</td><td class="intensity-4">выс</td><td class="intensity-5">пик</td>
+          <td class="intensity-5">пик</td><td class="intensity-1">низк</td><td class="intensity-1">низк</td>
+          <td class="intensity-2">↑</td><td class="intensity-4">выс</td><td class="intensity-5">пик</td>
+          <td class="intensity-4">выс</td><td class="intensity-2">↑</td><td class="intensity-1">низк</td>
+        </tr>
+        <tr>
+          <td class="row-label">Чт</td>
+          <td class="intensity-0">—</td><td class="intensity-1">низк</td><td class="intensity-1">низк</td>
+          <td class="intensity-2">↑</td><td class="intensity-3">ср</td><td class="intensity-4">выс</td>
+          <td class="intensity-4">выс</td><td class="intensity-2">↑</td><td class="intensity-1">низк</td>
+          <td class="intensity-2">↑</td><td class="intensity-4">выс</td><td class="intensity-5">пик</td>
+          <td class="intensity-4">выс</td><td class="intensity-3">ср</td><td class="intensity-1">низк</td>
+        </tr>
+        <tr>
+          <td class="row-label" style="color:var(--red)">Пт</td>
+          <td class="intensity-0">—</td><td class="intensity-1">низк</td><td class="intensity-2">↑</td>
+          <td class="intensity-2">↑</td><td class="intensity-3">ср</td><td class="intensity-5">пик</td>
+          <td class="intensity-5">пик</td><td class="intensity-2">↑</td><td class="intensity-2">↑</td>
+          <td class="intensity-3">ср</td><td class="intensity-5">пик</td><td class="intensity-5">пик</td>
+          <td class="intensity-5">пик</td><td class="intensity-4">выс</td><td class="intensity-2">↑</td>
+        </tr>
+        <tr>
+          <td class="row-label" style="color:var(--red)">Сб</td>
+          <td class="intensity-1">низк</td><td class="intensity-2">↑</td><td class="intensity-3">ср</td>
+          <td class="intensity-3">ср</td><td class="intensity-4">выс</td><td class="intensity-4">выс</td>
+          <td class="intensity-4">выс</td><td class="intensity-3">ср</td><td class="intensity-3">ср</td>
+          <td class="intensity-3">ср</td><td class="intensity-5">пик</td><td class="intensity-5">пик</td>
+          <td class="intensity-5">пик</td><td class="intensity-4">выс</td><td class="intensity-2">↑</td>
+        </tr>
+        <tr>
+          <td class="row-label" style="color:var(--red)">Вс</td>
+          <td class="intensity-1">низк</td><td class="intensity-2">↑</td><td class="intensity-3">ср</td>
+          <td class="intensity-4">выс</td><td class="intensity-4">выс</td><td class="intensity-4">выс</td>
+          <td class="intensity-3">ср</td><td class="intensity-3">ср</td><td class="intensity-3">ср</td>
+          <td class="intensity-2">↑</td><td class="intensity-4">выс</td><td class="intensity-4">выс</td>
+          <td class="intensity-3">ср</td><td class="intensity-2">↑</td><td class="intensity-1">низк</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 2px;" class="reveal">
+    <div class="insight-box" style="border-color: var(--red)">
+      <h3>Пиковые периоды</h3>
+      <p><span class="highlight-num">Обеденный пик</span>: 13:00–14:00 во все будние дни. Стабильная двойная нагрузка на кухню.</p>
+      <p><span class="highlight-num">Вечерний пик</span>: 18:00–20:00, особенно в Пт–Сб. Требует максимального состава смены.</p>
+    </div>
+    <div class="insight-box" style="border-color: rgba(255,255,255,0.15)">
+      <h3>«Мёртвые часы»</h3>
+      <p>Промежуток <span class="highlight-num">15:00–17:00</span> в будние дни — зона минимального трафика. Оптимизация графика персонала даст прямую экономию ФОТ.</p>
+      <p>В выходные (Сб–Вс) эти же часы показывают средний трафик — сокращать нельзя.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MENU CATEGORIES ────────────────────────────────── -->
+<section id="menu">
+  <div class="section-tag">Популярность меню</div>
+  <h2 class="section-title reveal">Топ категорий<br>по продажам</h2>
+
+  <div class="menu-bars reveal">
+    <div class="menu-bar-item">
+      <div class="menu-bar-label">Кофе</div>
+      <div class="menu-bar-track">
+        <div class="menu-bar-fill" style="width:88%; animation: barGrow 1s 0.1s ease forwards;"></div>
+      </div>
+      <div class="menu-bar-val">88%</div>
+    </div>
+    <div class="menu-bar-item">
+      <div class="menu-bar-label">Десерты</div>
+      <div class="menu-bar-track">
+        <div class="menu-bar-fill" style="width:75%; animation: barGrow 1s 0.25s ease forwards;"></div>
+      </div>
+      <div class="menu-bar-val">75%</div>
+    </div>
+    <div class="menu-bar-item">
+      <div class="menu-bar-label">Основные блюда</div>
+      <div class="menu-bar-track">
+        <div class="menu-bar-fill" style="width:62%; animation: barGrow 1s 0.4s ease forwards;"></div>
+      </div>
+      <div class="menu-bar-val">62%</div>
+    </div>
+    <div class="menu-bar-item">
+      <div class="menu-bar-label">Напитки</div>
+      <div class="menu-bar-track">
+        <div class="menu-bar-fill" style="width:45%; animation: barGrow 1s 0.55s ease forwards;"></div>
+      </div>
+      <div class="menu-bar-val">45%</div>
+    </div>
+    <div class="menu-bar-item">
+      <div class="menu-bar-label">Закуски</div>
+      <div class="menu-bar-track">
+        <div class="menu-bar-fill" style="width:32%; animation: barGrow 1s 0.7s ease forwards;"></div>
+      </div>
+      <div class="menu-bar-val">32%</div>
+    </div>
+  </div>
+
+  <p style="margin-top: 28px; font-size: 0.82rem; color: rgba(245,243,239,0.45); max-width: 560px;">
+    Лидируют высокомаржинальные позиции — кофе и десерты. Это сильная сторона текущего меню, которую необходимо усилить через upselling в залах.
+  </p>
+</section>
+
+<!-- ─── ETL / АРХИТЕКТУРА ──────────────────────────────── -->
+<section id="etl">
+  <div class="section-tag">Методология</div>
+  <h2 class="section-title reveal">Архитектура данных<br>и ETL-процесс</h2>
+
+  <div class="etl-grid">
+    <div class="etl-step reveal reveal-delay-1" data-step="01">
+      <div class="etl-icon">⟳</div>
+      <div class="etl-title">Типизация данных</div>
+      <div class="etl-text">Преобразование текстовых форматов дат и времени в канонический вид. Строковые значения выручки конвертированы в числовые типы (Decimal / Integer).</div>
+    </div>
+    <div class="etl-step reveal reveal-delay-2" data-step="02">
+      <div class="etl-icon">✕</div>
+      <div class="etl-title">Очистка дубликатов</div>
+      <div class="etl-text">Каждая строка кассовой выгрузки — одна позиция (блюдо). Для корректного подсчёта трафика применена логика уникальных номеров чеков (DISTINCTCOUNT).</div>
+    </div>
+    <div class="etl-step reveal reveal-delay-3" data-step="03">
+      <div class="etl-icon">◎</div>
+      <div class="etl-title">Схема «Звезда»</div>
+      <div class="etl-text">Таблицы фактов (2025, 2026, План) связаны с измерениями «Каналы» и «Периоды» (Завтрак / Ланч / Ужин / Ночь) через однонаправленные связи 1:*.</div>
+    </div>
+  </div>
+
+  <div style="background: var(--gray); padding: 32px 40px; display: flex; align-items: center; gap: 48px;" class="reveal">
+    <div>
+      <div style="font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; color: var(--gray-light); margin-bottom:8px;">Источники данных</div>
+      <div style="font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700;">3 массива</div>
+    </div>
+    <div style="width:1px; height:48px; background: var(--border)"></div>
+    <div>
+      <div style="font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; color: var(--gray-light); margin-bottom:8px;">Период анализа</div>
+      <div style="font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700;">Фев 2025 → 2026</div>
+    </div>
+    <div style="width:1px; height:48px; background: var(--border)"></div>
+    <div>
+      <div style="font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; color: var(--gray-light); margin-bottom:8px;">BI-платформа</div>
+      <div style="font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700;">Power BI</div>
+    </div>
+    <div style="width:1px; height:48px; background: var(--border)"></div>
+    <div>
+      <div style="font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; color: var(--gray-light); margin-bottom:8px;">Дашборд-страниц</div>
+      <div style="font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700;">3 раздела</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RECOMMENDATIONS ────────────────────────────────── -->
+<section id="recs">
+  <div class="section-tag">Рекомендации</div>
+  <h2 class="section-title reveal">Стратегические<br>решения для роста</h2>
+
+  <div class="rec-grid">
+    <div class="rec-card reveal reveal-delay-1">
+      <div class="rec-num">01</div>
+      <div class="rec-title">Программа роста среднего чека</div>
+      <div class="rec-text">
+        Внедрить скрипты upselling и cross-selling для официантов в вечернее время (18:00+). Разработать комбо-предложения и сеты, нацеленные на преодоление барьера в <strong style="color:var(--white)">3 500 ₽</strong> за чек.
+      </div>
+    </div>
+    <div class="rec-card reveal reveal-delay-2">
+      <div class="rec-num">02</div>
+      <div class="rec-title">Реорганизация под доставку</div>
+      <div class="rec-text">
+        Доставка даёт +125% к плану — перенаправить маркетинговый бюджет с поддержки самовывоза (стагнация) на развитие собственного приложения и агрегаторов. Поставить амбициозные цели.
+      </div>
+    </div>
+    <div class="rec-card reveal reveal-delay-3">
+      <div class="rec-num">03</div>
+      <div class="rec-title">Оптимизация ФОТ по типу дня</div>
+      <div class="rec-text">
+        Сократить вывод персонала в «мёртвые часы» <strong style="color:var(--white)">15:00–17:00 в будние</strong>. Усилить пятничные и субботние вечерние смены с 18:00. Выходные 15:00–17:00 — не сокращать.
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="margin: 0 48px"></div>
+
+<!-- ─── FOOTER ─────────────────────────────────────────── -->
+<footer>
+  <div class="footer-brand">italy<span>.</span></div>
+  <div class="footer-meta">
+    Аналитический отчёт<br>
+    Февраль 2026 · Power BI Dashboard
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Animate bars when visible
+  const bars = document.querySelectorAll('.menu-bar-fill');
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.animation = e.target.style.animation || `barGrow 1s ease forwards`;
+        barObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  bars.forEach(b => barObserver.observe(b));
+
+  // Counter animation for hero stats
+  function animateCounter(el, target, prefix='', suffix='') {
+    const raw = target.replace(/[^\d.]/g,'');
+    const end = parseFloat(raw);
+    const isFloat = raw.includes('.');
+    const decimals = isFloat ? raw.split('.')[1].length : 0;
+    let start = null;
+    const dur = 1400;
+    function step(ts) {
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const val = ease * end;
+      el.textContent = prefix + val.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  setTimeout(() => {
+    document.querySelectorAll('.hero-stat-num').forEach((el, i) => {
+      const texts = ['22.42 млн', '6 375', '86.18%'];
+      const raw = texts[i].replace(/[^\d.]/g,'');
+      animateCounter(el, raw, '', '');
+    });
+  }, 800);
+</script>
+</body>
+</html>
