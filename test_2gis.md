@@ -84,59 +84,56 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 
 default_args = {
-    'owner': 'data_analytics',
+    'owner': 'Илья Никишин',
     'depends_on_past': False,
+    'start_date': datetime(2026, 1, 1),
+    'email_on_failure': False,
+    'email_on_retry': False,
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
 }
 
-def generate_cumulative_reports(**kwargs):
-    cutoff_date = kwargs['tomorrow_ds']
-    print(f"Сбор данных за всю историю до: {kwargs['ds']} (включительно)")
+def process_launch_statistics(**kwargs):
+    execution_date_str = kwargs['ds'] 
+    execution_date = pd.to_datetime(execution_date_str).date()
     
-    stat_path = '/path/to/your/data/launch_test_task.csv' 
-    df = pd.read_csv(stat_path)
+    stat_path = 'launch_test_task.csv' 
+    df = pd.read_csv(stat_path, sep=';')
     
-    df['date'] = pd.to_datetime(df['date'])
-    
-    df_filtered = df[df['date'] < pd.to_datetime(cutoff_date)].copy()
-    
-    if df_filtered.empty:
-        print("Данные для расчета отсутствуют!")
-        return "No data"
 
-    output_dir = '/path/to/your/output/directory/'
-
-    user_stat = df_filtered.groupby(['source', 'platform']).agg(
+    # Часть 1 (Платформы)
+    user_stat = df.groupby(['platform']).agg(
         uniq_user=('user_id', 'nunique'),
         count_sessions=('session_id', 'count')
     ).reset_index()
-    user_stat.columns = ['Источники', 'Платформа', 'Уникальные пользователи', 'Кол-во сессий']
-    user_stat.to_csv(f"{output_dir}user_stat_result.csv", index=False, encoding='utf-8-sig')
+    user_stat.columns = ['Платформа', 'Уникальные пользователи', 'Кол-во сессий']
+    
+    user_stat.to_csv('/opt/airflow/output/user_stat_result.csv', index=False, encoding='utf-8-sig')
 
-    stat_user_city = df_filtered.groupby('region').agg(
+    # Часть 2
+    stat_user_city = df.groupby('region').agg(
         u_count=('user_id', 'nunique')
     ).reset_index()
     stat_user_city = stat_user_city.sort_values(by='u_count', ascending=False)
     stat_user_city.columns = ['Город', 'Количество пользователей']
-    stat_user_city.to_csv(f"{output_dir}stat_user_city_table.csv", index=False, encoding='utf-8-sig')
     
-    print("Файлы user_stat_result.csv и stat_user_city_table.csv успешно обновлены.")
+    stat_user_city.to_csv('/opt/airflow/output/stat_user_city_table.csv', index=False, encoding='utf-8-sig')
 
 with DAG(
-    'marketing_cumulative_reports',
+    'launch_analytics_daily',
     default_args=default_args,
-    description='Ежедневное обновление кумулятивных отчетов до вчерашнего дня',
-    schedule_interval='0 3 * * *',
-    start_date=datetime(2026, 7, 1),
-    catchup=False,                  
-    max_active_runs=1,
+    description='Ежедневный расчет продуктовых метрик запусков приложения (исключая текущий день)',
+    schedule_interval='0 1 * * *', 
+    catchup=False,
 ) as dag:
 
-    run_report = PythonOperator(
-        task_id='generate_cumulative_reports',
-        python_callable=generate_cumulative_reports,
+    run_analytics = PythonOperator(
+        task_id='calculate_metrics',
+        python_callable=process_launch_statistics,
+        provide_context=True,
     )
+
+    run_analytics
 ```
 
 # Блок A/B тесты
