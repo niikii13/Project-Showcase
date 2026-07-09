@@ -57,15 +57,16 @@ ORDER BY month_sale
 # Часть 1
 import pandas as pd 
 import numpy as np
+from google.colab import files
 stat = 'launch_test_task.csv'
-df = pd.read_csv(stat)
-user_stat = df.groupby(['source', 'platform']).agg(
+df = pd.read_csv(stat, sep=';')
+user_stat = df.groupby(['platform']).agg(
     uniq_user = ('user_id', 'nunique'),
     count_sessions = ('session_id', 'count')
 ).reset_index()
-user_stat.columns = ['Источники', 'Платформа', 'Уникальные пользователи', 'Кол-во сессий']
+user_stat.columns = ['Платформа', 'Уникальные пользователи', 'Кол-во сессий']
 user_stat.to_csv('user_stat_result.csv', index = False, encoding = 'utf-8-sig')
-
+files.download('user_stat_result.csv')
 # Часть 2
 stat_user_city = df.groupby('region').agg(
     u_count = ('user_id', 'nunique')
@@ -73,6 +74,7 @@ stat_user_city = df.groupby('region').agg(
 stat_user_city = stat_user_city.sort_values(by='u_count', ascending=False)
 stat_user_city.columns = ['Город', 'Количество пользователей']
 stat_user_city.to_csv('stat_user_city_table.csv', index = False, encoding = 'utf-8-sig')
+files.download('stat_user_city_table.csv')
 ```
 ## Задание 2*
 ```python
