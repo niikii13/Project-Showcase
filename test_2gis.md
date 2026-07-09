@@ -54,7 +54,7 @@ ORDER BY month_sale
 # Блок Python
 ## Задание 1
 ```python
--- Часть 1
+# Часть 1
 import pandas as pd 
 import numpy as np
 stat = 'launch_test_task.csv'
@@ -66,7 +66,7 @@ user_stat = df.groupby(['source', 'platform']).agg(
 user_stat.columns = ['Источники', 'Платформа', 'Уникальные пользователи', 'Кол-во сессий']
 user_stat.to_csv('user_stat_result.csv', index = False, encoding = 'utf-8-sig')
 
--- Часть 2
+# Часть 2
 stat_user_city = df.groupby('region').agg(
     u_count = ('user_id', 'nunique')
  ).reset_index()
